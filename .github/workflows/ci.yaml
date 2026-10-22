@@ -97,7 +97,7 @@ jobs:
           print(json.dumps(response.json(), indent=2))
 
   Benchmarks:
-    if: github.event_name != 'workflow_dispatch' || github.event.inputs.benchmarks == 'true'
+    if: github.repository == 'ultralytics/ultralytics' && (github.event_name != 'workflow_dispatch' || github.event.inputs.benchmarks == 'true')
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -160,7 +160,7 @@ jobs:
           echo "$(cat benchmarks.log)" >> $GITHUB_STEP_SUMMARY
 
   Tests:
-    if: github.event_name != 'workflow_dispatch' || github.event.inputs.tests == 'true'
+    if: github.repository == 'ultralytics/ultralytics' && (github.event_name != 'workflow_dispatch' || github.event.inputs.tests == 'true')
     timeout-minutes: 60
     runs-on: ${{ matrix.os }}
     strategy:

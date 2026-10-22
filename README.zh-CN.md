@@ -48,6 +48,8 @@
 | 实验三 | **CBAM** | `yolov8-cbam.yaml` | 随机初始化 | 50 | 248 | 198 | 0.6270 | **0.6730** | **0.6862** | 0.3399 | 8,364 KB |
 
 > 📌 三组注意力实验在**完全不使用预训练权重**的条件下，仍在 mAP50、mAP50-95、Precision、Recall 四项上**全面超过 COCO 预训练基线**。
+>
+> 📊 本表与 [`实验结果/ablation_summary_latest.txt`](./实验结果/ablation_summary_latest.txt)（另有 `.md` / `.csv` 版本）**同源同口径**：全部数字由 `实验结果/生成消融汇总.py` 从各次 `results.csv` 自动汇总，指标统一取 mAP50-95 最高的一轮，无需手工誊抄。
 
 ### 2. 相对基线的增益
 
@@ -328,12 +330,22 @@ yolov8-se-ema-cbam/
 │   ├── 使用完整数据集…（基线）/train/
 │   ├── 实验一：yolov8-se/yolov8-se/
 │   ├── 实验二：yolov8-ema/yolov8-ema/
-│   └── 实验三：yolov8-cbam/yolov8-cbam/
+│   ├── 实验三：yolov8-cbam/yolov8-cbam/
+│   ├── ablation_summary_latest.txt  # ★ 消融结果汇总（等宽表格，一屏看完）
+│   ├── ablation_summary_latest.md   # ★ 消融结果汇总（Markdown）
+│   ├── ablation_summary_latest.csv  # ★ 消融结果汇总（机器可读）
+│   ├── 生成消融汇总.py               # 汇总生成脚本（改配置后可一键重生成）
+│   └── 早期基线尝试/                 # 早期基线训练超参快照（epochs 500 / 300，SGD，batch 16）
 │
 ├── datasets/                    # ⚠️ 本地数据集（.gitignore，未提交）
 ├── runs/                        # ⚠️ 本地训练输出（.gitignore，未提交）
-├── YOLOv8/  docker/  docs/  examples/  scripts/  tests/  .github/
+├── scripts/                     # ultralytics 上游脚本
+└── .github/                     # Issue 模板 / CI（已按仓库门禁停用上游框架级任务）
 ```
+
+> 📦 **已移除的上游内容**：`docs/`（329 个框架文档）· `examples/`（23 个示例）· `docker/`（7 个上游镜像配置）—— 均已从版本库中删除。
+> `tests/`（框架测试）本就未被提交（`.gitignore` 第 143 行 `tests/`），本地副本已一并清除。
+> 移除后仓库只保留与钢材缺陷检测直接相关的代码与实验产物。上游原始 README 保留在 `README.ultralytics.md` / `README.ultralytics.zh-CN.md`，出处与 AGPL-3.0 声明见[许可证](#-许可证)。
 
 **Git 提交状态**：`.gitignore` 中 `datasets/`、`runs/`、`*.pt` 均被排除，因此**数据集与权重文件不在仓库中**。`实验结果/` 目录下的 `results.csv`、`args.yaml`、混淆矩阵、PR/F1 曲线、训练批次可视化均已提交，可直接在线查看。
 
@@ -342,6 +354,12 @@ yolov8-se-ema-cbam/
 ## 📓 结果归档
 
 `实验结果/` 下每次实验均包含完整产物：
+
+> 📊 **不想逐个翻目录？** 先看汇总： [`ablation_summary_latest.txt`](./实验结果/ablation_summary_latest.txt)（等宽表格）/ [`.md`](./实验结果/ablation_summary_latest.md)（带增益分析与读数须知）/ [`.csv`](./实验结果/ablation_summary_latest.csv)（机器可读）。消融总表、相对基线增益、末轮指标、参数量开销、六类分类别表现一屏看完 —— 数字全部由 `实验结果/生成消融汇总.py` 从各次 `results.csv` 自动汇总，重跑实验后改配置一键重生成即可，不会出现"README 与结果文件对不上"的情况。
+>
+> ```bash
+> python 实验结果/生成消融汇总.py     # 重新生成三份汇总
+> ```
 
 | 文件 | 内容 |
 |:--|:--|
